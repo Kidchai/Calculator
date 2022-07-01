@@ -8,7 +8,7 @@ public class Main {
             while (true) {
                 String input = "";
                 //long result = 0;
-                ArrayList<Object> list = new ArrayList<>();
+                ArrayList<Element> list = new ArrayList<>();
                 Scanner scanner = new Scanner(System.in);
                 input = scanner.nextLine();
                 String buf = "";
@@ -18,8 +18,8 @@ public class Main {
                         input.charAt(i) == '-' ||
                         input.charAt(i) == '*' ||
                         input.charAt(i) == '/') {
-                        list.add(buf);
-                        list.add(element);
+                        list.add(new Number(buf));
+                        list.add(new Operator(element));
                         buf = "";
                     } else {
                         buf += element;
@@ -27,15 +27,15 @@ public class Main {
 
                     if (i == input.length() - 1) {
                         if (!buf.equals("")) {
-                            list.add(buf);
+                            list.add(new Number(buf));
                         } else {
-                            list.add(element);
+                            list.add(new Operator(element));
                         }
                     }
                 }
 
-                for (Object e: list) {
-                    System.out.print(e + " ");
+                for (Element e: list) {
+                    System.out.print(e.makeString() + " ");
                 }
                 System.out.println("");
 
