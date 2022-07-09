@@ -10,8 +10,7 @@ public class Main {
         System.out.println("Please enter the problem and push \"Enter\".");
         while (true) {
             String input = "";
-            //long result = 0;
-            Scanner scanner = new Scanner(System.in);
+            Scanner scanner = new Scanner(System.in); //заменить
             input = scanner.nextLine();
             String buf = "";
             for (int i = 0; i < input.length(); i++) {
@@ -24,7 +23,7 @@ public class Main {
                     list.add(new Operator(element));
                     buf = "";
                 } else {
-                    buf += element;
+                    buf += element; //заменить на StringBuilder
                 }
 
                 if (i == input.length() - 1) {
@@ -37,11 +36,7 @@ public class Main {
             }
 
             Main.definePriority();
-
-            for (Element e : list) {
-                System.out.print(e.makeString() + " ");
-            }
-            System.out.println("");
+            System.out.println(Main.calculate());
         }
     }
 
@@ -57,7 +52,7 @@ public class Main {
 
         Set<Integer> allPriorities = new HashSet<>();
         int priority = 1;
-        boolean isPriorityAsserted = false;
+        boolean isPriorityAsserted;
 
         for (Element e : list) {
             if (e instanceof Operator && ((Operator) e).getPriority() == 1) {
@@ -85,5 +80,33 @@ public class Main {
                 }
             }
         }
+    }
+
+    private static int calculate() {
+        int priorityCounter = 1;
+        while (list.size() != 1) {
+            for (int i = 0; i < list.size(); i++) {
+                Element element = list.get(i);
+                if (element instanceof Operator && ((Operator) element).getPriority() == priorityCounter) {
+                    Element leftElement = list.get(i - 1);
+                    Element rightElement = list.get(i + 1);
+                    int leftNumber = Integer.parseInt((leftElement).makeString());
+                    int rightNumber = Integer.parseInt((rightElement).makeString());
+                    int result = 0;
+                    switch (element.makeString()) {
+                        case "*" -> result = leftNumber * rightNumber;
+                        case "/" -> result = leftNumber / rightNumber;
+                        case "+" -> result = leftNumber + rightNumber;
+                        case "-" -> result = leftNumber - rightNumber;
+                    }
+                    list.set(list.indexOf(leftElement), new Number(String.valueOf(result)));
+                    list.remove(i + 1);
+                    list.remove(i);
+                    priorityCounter++;
+                    break;
+                }
+            }
+        }
+        return Integer.parseInt(list.get(0).makeString());
     }
 }
