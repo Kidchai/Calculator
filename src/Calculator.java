@@ -87,8 +87,8 @@ public class Calculator {
                 if (element instanceof Operator && ((Operator) element).getPriority() == priorityCounter) {
                     Element leftElement = list.get(i - 1);
                     Element rightElement = list.get(i + 1);
-                    int leftNumber = Integer.parseInt((leftElement).makeString());
-                    int rightNumber = Integer.parseInt((rightElement).makeString());
+                    int leftNumber = ((Number) leftElement).returnValue();
+                    int rightNumber = ((Number) rightElement).returnValue();
                     int result = 0;
                     switch (element.makeString()) {
                         case "*" -> result = leftNumber * rightNumber;
@@ -96,7 +96,7 @@ public class Calculator {
                         case "+" -> result = leftNumber + rightNumber;
                         case "-" -> result = leftNumber - rightNumber;
                     }
-                    list.set(list.indexOf(leftElement), new Number(String.valueOf(result)));
+                    list.set(list.indexOf(leftElement), new Number(result));
                     list.remove(i + 1);
                     list.remove(i);
                     priorityCounter++;
@@ -104,6 +104,6 @@ public class Calculator {
                 }
             }
         }
-        return Integer.parseInt(list.get(0).makeString());
+        return ((Number) list.get(0)).returnValue();
     }
 }
