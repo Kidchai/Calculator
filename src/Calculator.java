@@ -1,12 +1,18 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 //класс принимает на ввод строку, возвращает число
 public class Calculator {
-    private static ArrayList<Element> list = new ArrayList<>();
+    private static List<Element> list = new ArrayList<>();
 
-    void makeList(String input) {
+    public Calculator(String input) {
+        makeList(input);
+        definePriority();
+    }
+
+    private void makeList(String input) {
         String buf = "";
         for (int i = 0; i < input.length(); i++) {
             String element = Character.toString(input.charAt(i));
@@ -31,7 +37,7 @@ public class Calculator {
         }
     }
 
-    void definePriority() {
+    private void definePriority() {
         for (Element e : list) {
             if (e instanceof Operator) {
                 switch (e.makeString()) {
@@ -73,7 +79,7 @@ public class Calculator {
         }
     }
 
-    int calculate() {
+    public int calculate() {
         int priorityCounter = 1;
         while (list.size() != 1) {
             for (int i = 0; i < list.size(); i++) {
