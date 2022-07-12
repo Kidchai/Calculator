@@ -5,7 +5,7 @@ import java.util.Set;
 
 //класс принимает на ввод строку, возвращает число
 public class Calculator {
-    private static List<Element> list = new ArrayList<>();
+    private List<Element> list = new ArrayList<>();
 
     public Calculator(String input) {
         makeList(input);
