@@ -16,4 +16,11 @@ public class Number extends Element {
     public int returnValue() {
         return number;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (super.equals(other)) return true;
+        if (other == null || other.getClass() != this.getClass()) return false;
+        return returnValue() == ((Number) other).returnValue();
+    }
 }
