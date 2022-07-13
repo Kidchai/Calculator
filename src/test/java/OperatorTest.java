@@ -5,7 +5,6 @@ import javax.swing.plaf.synth.SynthOptionPaneUI;
 import static org.junit.jupiter.api.Assertions.*;
 
 class OperatorTest {
-
     @Test
     void shouldReturn1() {
         Operator operator = new Operator("*");

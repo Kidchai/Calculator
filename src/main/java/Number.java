@@ -9,9 +9,9 @@ public class Number extends Element {
         this.number = number;
     }
 
-    public String makeString() {
-        return number.toString();
-    }
+//    public String toString() {
+//        return number.toString();
+//    }
 
     public int returnValue() {
         return number;
@@ -22,5 +22,10 @@ public class Number extends Element {
         if (super.equals(other)) return true;
         if (other == null || other.getClass() != this.getClass()) return false;
         return returnValue() == ((Number) other).returnValue();
+    }
+
+    @Override
+    public String toString() {
+        return number.toString();
     }
 }

@@ -44,7 +44,7 @@ public class Calculator {
         }
     }
 
-    public int calculate() {
+    public Number calculate() {
         int priorityCounter = 1;
         while (list.size() != 1) {
             for (int i = 0; i < list.size(); i++) {
@@ -66,6 +66,6 @@ public class Calculator {
                 }
             }
         }
-        return ((Number) list.get(0)).returnValue();
+        return (Number) list.get(0);
     }
 }

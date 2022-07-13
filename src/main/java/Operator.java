@@ -19,7 +19,7 @@ public class Operator extends Element {
         return priority;
     }
 
-    public String makeString() {
+    public String toString() {
         return operator;
     }
 

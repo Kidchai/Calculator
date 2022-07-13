@@ -1,3 +1,3 @@
 abstract public class Element {
-    abstract String makeString();
+    abstract public String toString();
 }
