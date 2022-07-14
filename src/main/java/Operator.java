@@ -37,23 +37,20 @@ public class Operator extends Element {
         return basePriority;
     }
     
-    public Number execute(Number left, Number right) { //
+    public Number execute(Number left, Number right) {
 //        int leftNumber = left.returnValue();
 //        int rightNumber = right.returnValue();
 
-        switch (operator) {
-            case "+":
-                return addNumber(left, right);
-            case "-":
-                return subtractNumber(left, right);
-//            case "*" -> result = leftNumber * rightNumber;
-//            case "/" -> leftNumber / rightNumber;
-//            case "-" -> leftNumber - rightNumber;
-        }
-        return new Number("");
+        return switch (operator) {
+            case "+" -> add(left, right);
+            case "-" -> subtract(left, right);
+            case "*" -> multiply(left, right);
+            case "/" -> divide(left, right);
+            default -> new Number("");
+        };
     }
 
-    public Number addNumber(Number left, Number right) {
+    private Number add(Number left, Number right) {
         int leftNumerator = left.getNumerator();
         int leftDenominator = left.getDenominator();
         int rightNumerator = right.getNumerator();
@@ -66,11 +63,10 @@ public class Operator extends Element {
             resultNumerator = leftNumerator + rightNumerator;
             resultDenominator = leftDenominator;
         }
-
         return new Number(resultNumerator, resultDenominator);
     }
 
-    public Number subtractNumber(Number left, Number right) {
+    private Number subtract(Number left, Number right) {
         int leftNumerator = left.getNumerator();
         int leftDenominator = left.getDenominator();
         int rightNumerator = right.getNumerator();
@@ -83,6 +79,29 @@ public class Operator extends Element {
             resultNumerator = leftNumerator - rightNumerator;
             resultDenominator = leftDenominator;
         }
+        return new Number(resultNumerator, resultDenominator);
+    }
+
+    private Number multiply(Number left, Number right) {
+        int leftNumerator = left.getNumerator();
+        int leftDenominator = left.getDenominator();
+        int rightNumerator = right.getNumerator();
+        int rightDenominator = right.getDenominator();
+
+        int resultNumerator = leftNumerator * rightNumerator;
+        int resultDenominator = leftDenominator * rightDenominator;
+
+        return new Number(resultNumerator, resultDenominator);
+    }
+
+    private Number divide(Number left, Number right) {
+        int leftNumerator = left.getNumerator();
+        int leftDenominator = left.getDenominator();
+        int rightNumerator = right.getDenominator();
+        int rightDenominator = right.getNumerator();
+
+        int resultNumerator = leftNumerator * rightNumerator;
+        int resultDenominator = leftDenominator * rightDenominator;
 
         return new Number(resultNumerator, resultDenominator);
     }
