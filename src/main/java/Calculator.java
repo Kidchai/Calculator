@@ -15,7 +15,9 @@ public class Calculator {
             String element = Character.toString(input.charAt(i));
 
             if (Operator.getAllOperators().contains(element)) {
-                list.add(new Number(buf.toString()));
+                Number number = new Number(buf.toString());
+                number.convertToFraction();
+                list.add(number);
                 list.add(new Operator(element));
                 buf = new StringBuilder();
             } else {
@@ -23,7 +25,9 @@ public class Calculator {
             }
         }
         if (!buf.toString().equals("")) {
-            list.add(new Number(buf.toString()));
+            Number number = new Number(buf.toString());
+            number.convertToFraction();
+            list.add(number);
         }
     }
 

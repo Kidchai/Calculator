@@ -32,23 +32,59 @@ public class Operator extends Element {
                 break;
             case "-":
             case "+":
-                basePriority = 0;
                 break;
         }
         return basePriority;
     }
     
-    public Number execute(Number left, Number right) {
-        int leftNumber = left.returnValue();
-        int rightNumber = right.returnValue();
-        int result = 0;
+    public Number execute(Number left, Number right) { //
+//        int leftNumber = left.returnValue();
+//        int rightNumber = right.returnValue();
+
         switch (operator) {
-            case "*" -> result = leftNumber * rightNumber;
-            case "/" -> result = leftNumber / rightNumber;
-            case "+" -> result = leftNumber + rightNumber;
-            case "-" -> result = leftNumber - rightNumber;
+            case "+":
+                return addNumber(left, right);
+            case "-":
+                return subtractNumber(left, right);
+//            case "*" -> result = leftNumber * rightNumber;
+//            case "/" -> leftNumber / rightNumber;
+//            case "-" -> leftNumber - rightNumber;
         }
-        return new Number(result);
+        return new Number("");
+    }
+
+    public Number addNumber(Number left, Number right) {
+        int leftNumerator = left.getNumerator();
+        int leftDenominator = left.getDenominator();
+        int rightNumerator = right.getNumerator();
+        int rightDenominator = right.getDenominator();
+
+        int resultNumerator = 0;
+        int resultDenominator = 0;
+
+        if (leftDenominator == rightDenominator) {
+            resultNumerator = leftNumerator + rightNumerator;
+            resultDenominator = leftDenominator;
+        }
+
+        return new Number(resultNumerator, resultDenominator);
+    }
+
+    public Number subtractNumber(Number left, Number right) {
+        int leftNumerator = left.getNumerator();
+        int leftDenominator = left.getDenominator();
+        int rightNumerator = right.getNumerator();
+        int rightDenominator = right.getDenominator();
+
+        int resultNumerator = 0;
+        int resultDenominator = 0;
+
+        if (leftDenominator == rightDenominator) {
+            resultNumerator = leftNumerator - rightNumerator;
+            resultDenominator = leftDenominator;
+        }
+
+        return new Number(resultNumerator, resultDenominator);
     }
 
     public static List<String> getAllOperators() {
