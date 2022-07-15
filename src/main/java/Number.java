@@ -7,15 +7,6 @@ public class Number extends Element {
         this.number = number;
     }
 
-//    public Number(int number) {
-//        this.number = number;
-//    }
-
-//    public Number(String numerator, String denominator) {
-//        this.numerator = Integer.parseInt(numerator);
-//        this.denominator = Integer.parseInt(denominator);
-//    }
-
     public Number(int numerator, int denominator) {
         this.numerator = numerator;
         this.denominator = denominator;
@@ -39,13 +30,13 @@ public class Number extends Element {
     public int getDenominator() {
         return denominator;
     }
-
-    @Override
-    public boolean equals(Object other) {
-        if (super.equals(other)) return true;
-        if (other == null || other.getClass() != getClass()) return false;
-        return toString().equals(other.toString());
-    }
+//
+//    @Override
+//    public boolean equals(Object other) {
+//        if (super.equals(other)) return true;
+//        if (other == null || other.getClass() != getClass()) return false;
+//        return toString().equals(other.toString());
+//    }
 
     @Override
     public String toString() {

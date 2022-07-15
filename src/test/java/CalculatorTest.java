@@ -6,8 +6,11 @@ class CalculatorTest {
 
     @ParameterizedTest
     @CsvSource(value = {
+            "1=1",
             "5+7-5*2=2",
             "3-5/2=0.5",
+            "10/3*3=10",
+            "5/2+7=9.5",
     }, delimiter = '=')
     void test(String input, String expected) {
         var calculator = new Calculator(input);

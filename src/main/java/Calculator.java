@@ -16,8 +16,10 @@ public class Calculator {
 
             if (Operator.getAllOperators().contains(element)) {
                 Number number = new Number(buf.toString());
-                number.convertToFraction();
-                list.add(number);
+                if (buf.length() != 0) {
+                    number.convertToFraction();
+                    list.add(number);
+                }
                 list.add(new Operator(element));
                 buf = new StringBuilder();
             } else {
@@ -34,7 +36,7 @@ public class Calculator {
     private void definePriority() {
         int priority = 1;
 
-        for (int basePriority : new int[]{1, 0}) {
+        for (int basePriority : new int[]{1, 2, 3}) {
             for (Element element : list) {
                 if (!(element instanceof Operator operator)) {
                     continue;
@@ -59,10 +61,22 @@ public class Calculator {
                 }
 
                 if (operator.getPriority() == priorityCounter) {
+
+                    if (operator.getOperator().equals("!")) {
+                        Number number = (Number) list.get(i - 1);
+                        Number result = operator.execute(number);
+                        list.set(i - 1, result);
+                        list.remove(i);
+                        priorityCounter++;
+                        break;
+                    }
+
                     Number leftElement = (Number) list.get(i - 1);
                     Number rightElement = (Number) list.get(i + 1);
 
-                    list.set(i - 1, operator.execute(leftElement, rightElement));
+                    Number result = operator.execute(leftElement, rightElement);
+                    //Number result =
+                    list.set(i - 1, result);
                     list.remove(i + 1);
                     list.remove(i);
                     priorityCounter++;

@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -7,6 +6,10 @@ public class Operator extends Element {
 
     public Operator(String operator) {
         this.operator = operator;
+    }
+
+    public String getOperator() {
+        return operator;
     }
 
     private int priority;
@@ -19,33 +22,28 @@ public class Operator extends Element {
         return priority;
     }
 
-    public String toString() {
-        return operator;
-    }
-
     public int getBasePriority() {
-        int basePriority = 0;
-        switch (operator) {
-            case "*":
-            case "/":
-                basePriority = 1;
-                break;
-            case "-":
-            case "+":
-                break;
-        }
-        return basePriority;
+        return switch (operator) {
+            case "!" -> 1;
+            case "*", "/" -> 2;
+            case "-", "+" -> 3;
+            default -> 0;
+        };
     }
     
     public Number execute(Number left, Number right) {
-//        int leftNumber = left.returnValue();
-//        int rightNumber = right.returnValue();
-
         return switch (operator) {
             case "+" -> add(left, right);
             case "-" -> subtract(left, right);
             case "*" -> multiply(left, right);
             case "/" -> divide(left, right);
+            default -> new Number("");
+        };
+    }
+
+    public Number execute(Number number) {
+        return switch (operator) {
+            case "!" -> findFactorial(number);
             default -> new Number("");
         };
     }
@@ -110,6 +108,12 @@ public class Operator extends Element {
         return new Number(resultNumerator, resultDenominator);
     }
 
+    private Number findFactorial(Number number) {
+        int result = number.getNumerator() * 2; //change
+
+        return new Number(result, 1);
+    }
+
     private int[] setCommonDenominator(int leftNumerator, int leftDenominator, int rightNumerator, int rightDenominator) {
         int commonDenominator = findCommonDenominator(leftDenominator, rightDenominator);
 
@@ -137,6 +141,6 @@ public class Operator extends Element {
     }
 
     public static List<String> getAllOperators() {
-        return Arrays.asList("+", "-", "*", "/");
+        return Arrays.asList("+", "-", "*", "/", "!");
     }
 }
