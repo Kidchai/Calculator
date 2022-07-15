@@ -10,7 +10,7 @@ public class Main {
 
             Calculator calculator = new Calculator(input);
 
-            System.out.println(calculator.calculate());
+            System.out.println(calculator.calculate().toString());
         }
     }
 }

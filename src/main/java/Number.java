@@ -32,10 +32,6 @@ public class Number extends Element {
         }
     }
 
-//    public int returnValue() {
-//        return number;
-//    }
-
     public int getNumerator() {
         return numerator;
     }
@@ -44,24 +40,21 @@ public class Number extends Element {
         return denominator;
     }
 
-    public void setNumerator(int numerator, int denominator) {
-        this.numerator = numerator;
+    @Override
+    public boolean equals(Object other) {
+        if (super.equals(other)) return true;
+        if (other == null || other.getClass() != getClass()) return false;
+        return toString().equals(other.toString());
     }
-
-    public void setDenominator(int numerator, int denominator) {
-        this.denominator = denominator;
-    }
-
-//    @Override
-//    public boolean equals(Object other) {
-//        if (super.equals(other)) return true;
-//        if (other == null || other.getClass() != this.getClass()) return false;
-//        return returnValue() == ((Number) other).returnValue();
-//    }
 
     @Override
     public String toString() {
         double result = (double) numerator / (double) denominator;
-        return String.valueOf(result);
+
+        if (result == (int) result) {
+            return String.valueOf((int) result);
+        } else {
+            return String.valueOf(result);
+        }
     }
 }
