@@ -25,7 +25,7 @@ public class Number extends Element {
         if (number.contains(".")) {
             String[] array = number.split("\\.");
             numerator = Integer.parseInt(array[0]) * 10 + Integer.parseInt(array[1]);
-            denominator = 10;
+            denominator = (int)  Math.pow(10, array[1].length());
         } else {
             numerator = Integer.parseInt(number);
             denominator = 1;

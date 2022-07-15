@@ -56,13 +56,15 @@ public class Operator extends Element {
         int rightNumerator = right.getNumerator();
         int rightDenominator = right.getDenominator();
 
-        int resultNumerator = 0;
-        int resultDenominator = 0;
-
-        if (leftDenominator == rightDenominator) {
-            resultNumerator = leftNumerator + rightNumerator;
-            resultDenominator = leftDenominator;
+        if (leftDenominator != rightDenominator) {
+            int[] array = setCommonDenominator(leftNumerator, leftDenominator, rightNumerator, rightDenominator);
+            leftNumerator = array[0];
+            leftDenominator = array[1];
+            rightNumerator = array[2];
         }
+        int resultNumerator = leftNumerator + rightNumerator;
+        int resultDenominator = leftDenominator;
+
         return new Number(resultNumerator, resultDenominator);
     }
 
@@ -72,13 +74,15 @@ public class Operator extends Element {
         int rightNumerator = right.getNumerator();
         int rightDenominator = right.getDenominator();
 
-        int resultNumerator = 0;
-        int resultDenominator = 0;
-
-        if (leftDenominator == rightDenominator) {
-            resultNumerator = leftNumerator - rightNumerator;
-            resultDenominator = leftDenominator;
+        if (leftDenominator != rightDenominator) {
+            int[] array = setCommonDenominator(leftNumerator, leftDenominator, rightNumerator, rightDenominator);
+            leftNumerator = array[0];
+            leftDenominator = array[1];
+            rightNumerator = array[2];
         }
+        int resultNumerator = leftNumerator - rightNumerator;
+        int resultDenominator = leftDenominator;
+
         return new Number(resultNumerator, resultDenominator);
     }
 
@@ -104,6 +108,32 @@ public class Operator extends Element {
         int resultDenominator = leftDenominator * rightDenominator;
 
         return new Number(resultNumerator, resultDenominator);
+    }
+
+    private int[] setCommonDenominator(int leftNumerator, int leftDenominator, int rightNumerator, int rightDenominator) {
+        int commonDenominator = findCommonDenominator(leftDenominator, rightDenominator);
+
+        leftNumerator = commonDenominator / leftDenominator * leftNumerator;
+        rightNumerator = commonDenominator / rightDenominator * rightNumerator;
+
+        return new int[] {leftNumerator, commonDenominator, rightNumerator};
+    }
+
+    private int findCommonDenominator(int left, int right) {
+        int multiplication = left * right;
+        int buf;
+
+        if (left < right) {
+            int tmp = left;
+            left = right;
+            right = tmp;
+        }
+        while (right != 0) {
+            buf = left % right;
+            left = right;
+            right = buf;
+        }
+        return multiplication / left;
     }
 
     public static List<String> getAllOperators() {
