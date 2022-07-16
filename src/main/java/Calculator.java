@@ -61,10 +61,11 @@ public class Calculator {
                 }
 
                 if (operator.getPriority() == priorityCounter) {
+                    Operation operation = new Operation();
 
                     if (operator.getOperator().equals("!")) {
                         Number number = (Number) list.get(i - 1);
-                        Number result = operator.execute(number);
+                        Number result = operation.execute(operator.getOperator(), number);
                         list.set(i - 1, result);
                         list.remove(i);
                         priorityCounter++;
@@ -74,8 +75,7 @@ public class Calculator {
                     Number leftElement = (Number) list.get(i - 1);
                     Number rightElement = (Number) list.get(i + 1);
 
-                    Number result = operator.execute(leftElement, rightElement);
-                    //Number result =
+                    Number result = operation.execute(operator.getOperator(), leftElement, rightElement);
                     list.set(i - 1, result);
                     list.remove(i + 1);
                     list.remove(i);
