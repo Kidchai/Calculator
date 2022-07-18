@@ -3,25 +3,28 @@ public class Operation {
     int leftDenominator;
     int rightNumerator;
     int rightDenominator;
+    String operator;
 
-    public Number execute(String operator, Number left, Number right) {
-        leftNumerator = left.getNumerator();
-        leftDenominator = left.getDenominator();
-        rightNumerator = right.getNumerator();
-        rightDenominator = right.getDenominator();
+    public Operation(String operator, Number left, Number right) {
+        if (left != null) {
+            this.leftNumerator = left.getNumerator();
+            this.leftDenominator = left.getDenominator();
+        }
 
+        if (right != null) {
+            this.rightNumerator = right.getNumerator();
+            this.rightDenominator = right.getDenominator();
+        }
+        this.operator = operator;
+    }
+
+    public Number execute() {
         return switch (operator) {
             case "+" -> add();
             case "-" -> subtract();
             case "*" -> multiply();
             case "/" -> divide();
-            default -> new Number("");
-        };
-    }
-
-    public Number execute(String operator, Number number) {
-        return switch (operator) {
-            case "!" ->  findFactorial(number);
+            case "!" ->  findFactorial();
             default -> new Number("");
         };
     }
@@ -48,8 +51,8 @@ public class Operation {
         return new Number(leftNumerator * rightDenominator, leftDenominator * rightNumerator);
     }
 
-    private Number findFactorial(Number number) {
-        int result = number.getNumerator() * 2; //change
+    private Number findFactorial() {
+        int result = leftNumerator * 2; //change
 
         return new Number(result, 1);
     }

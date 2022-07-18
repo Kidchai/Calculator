@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Calculator {
-    private List<Element> list = new ArrayList<>();
+    private final List<Element> list = new ArrayList<>();
 
     public Calculator(String input) {
         makeList(input);
@@ -14,21 +14,17 @@ public class Calculator {
         for (int i = 0; i < input.length(); i++) {
             String element = Character.toString(input.charAt(i));
 
-            if (Operator.getAllOperators().contains(element)) {
+            if (Operator.getAllOperators().contains(element) && buf.length() > 0) {
                 Number number = new Number(buf.toString());
-                if (buf.length() != 0) {
-                    number.convertToFraction();
-                    list.add(number);
-                }
+                list.add(number);
                 list.add(new Operator(element));
                 buf = new StringBuilder();
             } else {
                 buf.append(element);
             }
         }
-        if (!buf.toString().equals("")) {
+        if (buf.length() > 0) {
             Number number = new Number(buf.toString());
-            number.convertToFraction();
             list.add(number);
         }
     }
@@ -61,23 +57,22 @@ public class Calculator {
                 }
 
                 if (operator.getPriority() == priorityCounter) {
-                    Operation operation = new Operation();
-
-                    if (operator.getOperator().equals("!")) {
-                        Number number = (Number) list.get(i - 1);
-                        Number result = operation.execute(operator.getOperator(), number);
-                        list.set(i - 1, result);
-                        list.remove(i);
-                        priorityCounter++;
-                        break;
-                    }
 
                     Number leftElement = (Number) list.get(i - 1);
-                    Number rightElement = (Number) list.get(i + 1);
+                    Number rightElement = null;
 
-                    Number result = operation.execute(operator.getOperator(), leftElement, rightElement);
+                    if (!operator.getOperator().equals("!")) {
+                        rightElement = (Number) list.get(i + 1);
+                    }
+
+                    Operation operation = new Operation(operator.getOperator(), leftElement, rightElement);
+
+                    Number result = operation.execute();
                     list.set(i - 1, result);
-                    list.remove(i + 1);
+
+                    if (!operator.getOperator().equals("!")) {
+                        list.remove(i + 1);
+                    }
                     list.remove(i);
                     priorityCounter++;
                     break;

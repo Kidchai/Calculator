@@ -1,18 +1,8 @@
 public class Number extends Element {
-    String number;
-    private Integer numerator;
-    private Integer denominator;
+    private final Integer numerator;
+    private final Integer denominator;
 
     public Number(String number) {
-        this.number = number;
-    }
-
-    public Number(int numerator, int denominator) {
-        this.numerator = numerator;
-        this.denominator = denominator;
-    }
-
-    public void convertToFraction() {
         if (number.contains(".")) {
             String[] array = number.split("\\.");
             numerator = Integer.parseInt(array[0]) * 10 + Integer.parseInt(array[1]);
@@ -21,6 +11,11 @@ public class Number extends Element {
             numerator = Integer.parseInt(number);
             denominator = 1;
         }
+    }
+
+    public Number(int numerator, int denominator) {
+        this.numerator = numerator;
+        this.denominator = denominator;
     }
 
     public int getNumerator() {
