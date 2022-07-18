@@ -59,18 +59,12 @@ public class Calculator {
                 if (operator.getPriority() == priorityCounter) {
 
                     Number leftElement = (Number) list.get(i - 1);
-                    Number rightElement = null;
+                    Number rightElement = operator.doesNeedRightElement() ? (Number) list.get(i + 1) : null;
 
-                    if (!operator.getOperator().equals("!")) {
-                        rightElement = (Number) list.get(i + 1);
-                    }
-
-                    Operation operation = new Operation(operator.getOperator(), leftElement, rightElement);
-
-                    Number result = operation.execute();
+                    Number result = operator.execute(leftElement, rightElement);
                     list.set(i - 1, result);
 
-                    if (!operator.getOperator().equals("!")) {
+                    if (operator.doesNeedRightElement()) {
                         list.remove(i + 1);
                     }
                     list.remove(i);

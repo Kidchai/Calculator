@@ -3,9 +3,8 @@ public class Operation {
     int leftDenominator;
     int rightNumerator;
     int rightDenominator;
-    String operator;
 
-    public Operation(String operator, Number left, Number right) {
+    public Operation(Number left, Number right) {
         if (left != null) {
             this.leftNumerator = left.getNumerator();
             this.leftDenominator = left.getDenominator();
@@ -15,49 +14,36 @@ public class Operation {
             this.rightNumerator = right.getNumerator();
             this.rightDenominator = right.getDenominator();
         }
-        this.operator = operator;
     }
 
-    public Number execute() {
-        return switch (operator) {
-            case "+" -> add();
-            case "-" -> subtract();
-            case "*" -> multiply();
-            case "/" -> divide();
-            case "!" ->  findFactorial();
-            default -> new Number("");
-        };
-    }
-
-    private Number add() {
-        if (leftDenominator != rightDenominator) {
-            setCommonDenominator();
-        }
+    public Number add() {
+        setCommonDenominator();
         return new Number(leftNumerator + rightNumerator, leftDenominator);
     }
 
-    private Number subtract() {
-        if (leftDenominator != rightDenominator) {
-            setCommonDenominator();
-        }
+    public Number subtract() {
+        setCommonDenominator();
         return new Number(leftNumerator - rightNumerator, leftDenominator);
     }
 
-    private Number multiply() {
+    public Number multiply() {
         return new Number(leftNumerator * rightNumerator, leftDenominator * rightDenominator);
     }
 
-    private Number divide() {
+    public Number divide() {
         return new Number(leftNumerator * rightDenominator, leftDenominator * rightNumerator);
     }
 
-    private Number findFactorial() {
+    public Number findFactorial() {
         int result = leftNumerator * 2; //change
 
         return new Number(result, 1);
     }
 
     private void setCommonDenominator() {
+        if (leftDenominator == rightDenominator) {
+            return;
+        }
         int commonDenominator = findCommonDenominator(leftDenominator, rightDenominator);
 
         leftNumerator = commonDenominator / leftDenominator * leftNumerator;
