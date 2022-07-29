@@ -9,12 +9,13 @@ class CalculatorTest {
             "1=1",
             "2!=4", //fix it after updating factorial
             "-1+1=0",
+            "(5)+4=9",
+            "1+(((5))+(4))=10",
             "-4*-4=16",
+            "3.2-2.4=0.8",
             "3*(2+5)=21",
-            "5+7-5*2=2",
             "3-5/2=0.5",
             "10/3*3=10",
-            "5/2+7=9.5",
     }, delimiter = '=')
     void test(String input, String expected) {
         var calculator = new Calculator(input);

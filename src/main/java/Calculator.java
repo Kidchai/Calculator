@@ -10,22 +10,34 @@ public class Calculator {
     }
 
     private void makeList(String input) {
-        if (input.contains("(")) {
-            String subString = input.substring(input.indexOf('(') + 1, input.indexOf(')'));
-            Calculator calculator = new Calculator(subString);
-            String result = calculator.calculate().toString();
-            StringBuilder stringBuilder = new StringBuilder(input);
-            stringBuilder.replace(stringBuilder.indexOf("("), input.indexOf(")") + 1, result);
-            input = stringBuilder.toString();
-        }
 
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             String element = Character.toString(input.charAt(i));
 
-            if (Operator.getAllOperators().contains(element) && buf.length() > 0) {
-                Number number = new Number(buf.toString());
-                list.add(number);
+            boolean isElementOperator = Operator.getAllOperators().contains(element);
+            boolean isLastListElementNumber = list.size() > 0 && list.get(list.size() - 1) instanceof Number;
+
+            if (element.equals("(")) {
+                for (int bracketCount = 1; bracketCount > 0; i++) {
+                    element = Character.toString(input.charAt(i + 1));
+                    if (element.equals("(")) {
+                        bracketCount++;
+                    } else if (element.equals(")")) {
+                        bracketCount--;
+                    }
+                    buf.append(element);
+                }
+                buf.deleteCharAt(buf.length() - 1);
+
+                Calculator calculator = new Calculator(buf.toString());
+                buf = new StringBuilder();
+                list.add(calculator.calculate());
+
+            } else if (isElementOperator && (buf.length() > 0 || isLastListElementNumber)) {
+                if (buf.length() > 0) {
+                    list.add(new Number(buf.toString()));
+                }
                 list.add(new Operator(element));
                 buf = new StringBuilder();
             } else {
@@ -33,8 +45,7 @@ public class Calculator {
             }
         }
         if (buf.length() > 0) {
-            Number number = new Number(buf.toString());
-            list.add(number);
+            list.add(new Number(buf.toString()));
         }
     }
 
