@@ -10,6 +10,15 @@ public class Calculator {
     }
 
     private void makeList(String input) {
+        if (input.contains("(")) {
+            String subString = input.substring(input.indexOf('(') + 1, input.indexOf(')'));
+            Calculator calculator = new Calculator(subString);
+            String result = calculator.calculate().toString();
+            StringBuilder stringBuilder = new StringBuilder(input);
+            stringBuilder.replace(stringBuilder.indexOf("("), input.indexOf(")") + 1, result);
+            input = stringBuilder.toString();
+        }
+
         StringBuilder buf = new StringBuilder();
         for (int i = 0; i < input.length(); i++) {
             String element = Character.toString(input.charAt(i));
@@ -32,7 +41,7 @@ public class Calculator {
     private void definePriority() {
         int priority = 1;
 
-        for (int basePriority : new int[]{1, 2, 3}) {
+        for (int basePriority : Operator.getBasePriorities()) {
             for (Element element : list) {
                 if (!(element instanceof Operator operator)) {
                     continue;

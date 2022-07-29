@@ -10,6 +10,7 @@ class CalculatorTest {
             "2!=4", //fix it after updating factorial
             "-1+1=0",
             "-4*-4=16",
+            "3*(2+5)=21",
             "5+7-5*2=2",
             "3-5/2=0.5",
             "10/3*3=10",

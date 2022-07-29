@@ -1,9 +1,17 @@
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Operator extends Element {
     String operator;
     private int priority;
+    private static Map<String, Integer> basePriorities = Stream.of( //создаю и наполняю значениями Map
+                    new AbstractMap.SimpleEntry<>("!", 1),
+                    new AbstractMap.SimpleEntry<>("*", 2),
+                    new AbstractMap.SimpleEntry<>("/", 2),
+                    new AbstractMap.SimpleEntry<>("-", 3),
+                    new AbstractMap.SimpleEntry<>("+", 3))
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
     public Operator(String operator) {
         this.operator = operator;
@@ -18,12 +26,13 @@ public class Operator extends Element {
     }
 
     public int getBasePriority() {
-        return switch (operator) {
-            case "!" -> 1;
-            case "*", "/" -> 2;
-            case "-", "+" -> 3;
-            default -> 0;
-        };
+        return basePriorities.get(operator);
+    }
+
+    public static Integer[] getBasePriorities() {
+        Integer[] array = basePriorities.values().toArray(new Integer[0]);
+        List<Integer> list = Arrays.stream(array).distinct().toList();
+        return list.toArray(new Integer[0]);
     }
 
     public boolean doesNeedRightElement() {
@@ -43,7 +52,7 @@ public class Operator extends Element {
         };
     }
 
-    public static List<String> getAllOperators() {
-        return Arrays.asList("+", "-", "*", "/", "!");
+    public static Set<String> getAllOperators() {
+        return basePriorities.keySet();
     }
 }
