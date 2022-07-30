@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Calculator {
@@ -50,24 +51,22 @@ public class Calculator {
     }
 
     private void definePriority() {
-        int priority = 1;
+        List<Operator> operators = list.stream()
+                .filter(element -> element instanceof Operator)
+                .map(element -> (Operator) element)
+                .toList();
 
-        for (int basePriority : Operator.getBasePriorities()) {
-            for (Element element : list) {
-                if (!(element instanceof Operator operator)) {
-                    continue;
-                }
+        List<Operator> operatorsCopy = new ArrayList<>(operators);
 
-                if (operator.getBasePriority() == basePriority) {
-                    operator.setPriority(priority);
-                    priority++;
-                }
-            }
-        }
+        Comparator<Operator> compareByPriority = Comparator.comparing(Operator::getBasePriority);
+        Comparator<Operator> compareIndex = Comparator.comparing(operators::indexOf);
+
+        operatorsCopy.sort((compareByPriority.thenComparing(compareIndex)));
+        operatorsCopy.forEach(operator -> operator.setPriority(operatorsCopy.indexOf(operator)));
     }
 
     public Number calculate() {
-        int priorityCounter = 1;
+        int priorityCounter = 0;
         while (list.size() != 1) {
             for (int i = 0; i < list.size(); i++) {
                 Element element = list.get(i);

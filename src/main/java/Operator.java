@@ -5,7 +5,7 @@ import java.util.stream.Stream;
 public class Operator extends Element {
     String operator;
     private int priority;
-    private static Map<String, Integer> basePriorities = Stream.of( //создаю и наполняю значениями Map
+    private static Map<String, Integer> basePriorities = Stream.of(
                     new AbstractMap.SimpleEntry<>("!", 1),
                     new AbstractMap.SimpleEntry<>("*", 2),
                     new AbstractMap.SimpleEntry<>("/", 2),
@@ -27,12 +27,6 @@ public class Operator extends Element {
 
     public int getBasePriority() {
         return basePriorities.get(operator);
-    }
-
-    public static Integer[] getBasePriorities() {
-        Integer[] array = basePriorities.values().toArray(new Integer[0]);
-        List<Integer> list = Arrays.stream(array).distinct().toList();
-        return list.toArray(new Integer[0]);
     }
 
     public boolean doesNeedRightElement() {
