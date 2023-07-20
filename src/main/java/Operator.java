@@ -6,8 +6,7 @@ public class Operator extends Element {
     String operator;
     private int priority;
     private static Map<String, Integer> basePriorities = Stream.of(
-                    new AbstractMap.SimpleEntry<>("!", 1),
-                    new AbstractMap.SimpleEntry<>("*", 2),
+                    new AbstractMap.SimpleEntry<>("*", 1),
                     new AbstractMap.SimpleEntry<>("/", 2),
                     new AbstractMap.SimpleEntry<>("-", 3),
                     new AbstractMap.SimpleEntry<>("+", 3))
@@ -41,7 +40,6 @@ public class Operator extends Element {
             case "-" -> operation.subtract();
             case "*" -> operation.multiply();
             case "/" -> operation.divide();
-            case "!" -> operation.findFactorial();
             default -> new Number("");
         };
     }

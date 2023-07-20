@@ -25,13 +25,6 @@ public class Number extends Element {
     public int getDenominator() {
         return denominator;
     }
-//
-//    @Override
-//    public boolean equals(Object other) {
-//        if (super.equals(other)) return true;
-//        if (other == null || other.getClass() != getClass()) return false;
-//        return toString().equals(other.toString());
-//    }
 
     @Override
     public String toString() {

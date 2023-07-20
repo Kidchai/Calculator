@@ -34,12 +34,6 @@ public class Operation {
         return new Number(leftNumerator * rightDenominator, leftDenominator * rightNumerator);
     }
 
-    public Number findFactorial() {
-        int result = leftNumerator * 2; //change
-
-        return new Number(result, 1);
-    }
-
     private void setCommonDenominator() {
         if (leftDenominator == rightDenominator) {
             return;
