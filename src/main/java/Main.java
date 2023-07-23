@@ -6,7 +6,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("Please enter the problem and push \"Enter\".");
 
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             while (true) {
                 try {
                     String input = reader.readLine();

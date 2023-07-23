@@ -1,10 +1,11 @@
-FROM maven:3.8.7-openjdk-18 AS build
+FROM maven:3.8.1-openjdk-17 AS build
 WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN export PATH=$PATH:/usr/local/openjdk-18/bin && mvn package --quiet
+COPY src /app/src
+COPY pom.xml /app
+RUN mvn clean package
 
-FROM openjdk:18
-COPY --from=build /app/target/classes /app
-WORKDIR /app
-ENTRYPOINT ["java", "main.java.Main"]
+FROM openjdk:17-jdk-slim
+WORKDIR /calculator
+COPY --from=build /app/target/Calculator-1.0-SNAPSHOT.jar /Calculator.jar
+CMD ["java", "-jar", "/Calculator.jar"]
+
