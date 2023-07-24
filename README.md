@@ -33,7 +33,7 @@ $ docker build -t calculator .
 **3. Run the Docker container.**
 
 ```bash
-$ docker run -it calculator
+$ docker run -i calculator
 ```
 
 That's it!
